@@ -1,6 +1,4 @@
-<?php
-// olfat
-?>
+
 
 <!doctype html>
 <html lang="en">
