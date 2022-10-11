@@ -2,47 +2,32 @@
 $title = "Review";
 session_start();
 // print_r($_SESSION);
-  $users= $_POST;
+//   $users= $_POST;
 		if(isset($_POST)) {
-			foreach ($users as $key => $value) {
-				# code...
-			
-		// 	if($_SESSION['quest1'] ==0||$_SESSION['quest2']==0||$_SESSION['quest3']
-		// ||$_SESSION['quest4']==0||$_SESSION['quest5']==0) {
-		// 	 	# code...
-		// 	 	$quest= 'bad';
-		// 	 }elseif($_SESSION['quest1'] ==3||$_SESSION['quest2']==3||$_SESSION['quest3']
-		// ||$_SESSION['quest4']==3||$_SESSION['quest5']==3){
-		// 	 	# code...
-		// 	 	$quest= 'Good';
-			 	
-		// 	 }elseif($_SESSION['quest1'] ==5||$_SESSION['quest2']==5||$_SESSION['quest3']
-		// ||$_SESSION['quest4']==5||$_SESSION['quest5']==5) {
-		// 	 	# code...
-		// 	 	$quest= 'Very Good';
-			 	
-		// 	 }else{
-		// 	 	$quest = "Excellent";}
-
-				if ($value==0) {
-					$quest = "bad";
-				}elseif ($value==3) {
-					# code...
-					$quest="Good";
-				}elseif ($value==5) {
-					# code...
-					$quest="very Good";
-				}elseif($value==10){
-					$quest="Exellent";
+			foreach ($_SESSION as $key=>$value) {
+				
+				switch($value){
+					case 0:
+						$quest = "bad";
+						break;
+					case 3:
+						$quest = "Good";
+						break;
+					case 5:
+						$quest ="very Good";
+						break;
+					case 10:
+						$quest = "Exellent";
+						break;		
+					
 				}
 			 }
 			
-		
-}
-$result = $_POST['quest1']+$_POST['quest2']+$_POST['quest3']+$_POST['quest4']+$_POST['quest5'];
+ 		}
+$result = $_SESSION['quest1']+$_SESSION['quest2']+$_SESSION['quest3']+$_SESSION['quest4']+$_SESSION['quest5'];
 if ($result<=25) {
 	# code...
-	$message= "We will call you later on this phone ". $_POST['number'];
+	$message= "We will call you later on this phone ". $_SESSION['number'];
 }else{
 	$message='Thank you';
 
@@ -70,7 +55,7 @@ if ($result<=25) {
         <div class="col-12 text-center mt-5">
            <form method="post">
            	<div class="form-group">
-           		<table>
+           		<table class="col-8 text-left mt-5">
            			<thead >
            				<tr>
            				<th>Questions</th>
@@ -79,6 +64,7 @@ if ($result<=25) {
            				</tr>
            			</thead>
            			<tbody>
+						
            				<tr>
            					<td>Are you satisfied with the level of cleanliness?</td>
            					<td><input class="form-check-input" type="text" value="<?=$quest?>"  ></td>
@@ -86,13 +72,13 @@ if ($result<=25) {
            				</tr>
 
                   <tr>
-                    <td>Are you satisfied with the level of cleanliness?</td>
+                    <td>Are you satisfied with  with the service price?</td>
                     <td><input class="form-check-input" type="text" value="<?=$quest?>"  ></td>
                   
                   </tr>
 
                   <tr>
-                    <td>Are you satisfied with the service price?</td>
+                    <td>Are you satisfied with nursing service?</td>
                     <td><input class="form-check-input" type="text" value="<?=$quest?>"  ></td>
                     
                   </tr>
@@ -106,7 +92,8 @@ if ($result<=25) {
                     <td>Are you satisfied with calmness of hospital?</td>
                     <td><input class="form-check-input" type="text" value="<?=$quest?>"  ></td>
                   
-                  <?$errors['quest']??'';?>
+                  </tr>
+				
            			</tbody>
            		</table>
            	</div>
@@ -121,13 +108,8 @@ if ($result<=25) {
                  	# code...
                  	header('location:Result.php');
 
-                 }
-                 if ($title="Result") {?>
-                 	<p><?=$message?? ' '?></p>
-
-                 	
-                <?php }
-                  ?>  
+                 }?>
+                 
                 </div>
 
            	

@@ -73,7 +73,7 @@ if ($_POST['city']=="cairo") {
                    <!--  <?= $errors['numVariable'] ?? "" ?> -->
                 </div>
                   <button class="btn btn-outline-dark rounded form-control" type="submit" name="Products"> Enter Products </button>
-              </form>
+              
               
             <?php if(isset($_POST['Products'])){
                 # code...
@@ -88,8 +88,8 @@ if ($_POST['city']=="cairo") {
                         </tr>
                     </thead>
                     <tbody>
-                         <form method="get">
-                            <?php for($i=0;$i<=$rows;$i++) {?>
+                         
+                        <?php for($i=0;$i<=$rows;$i++){?>
                             
                             <tr>
                                 <td><input type="text" id="productName" name="productName"></td>
@@ -97,7 +97,7 @@ if ($_POST['city']=="cairo") {
                                 <td><input type="float" id="quatity" name="quatity"></td>
                             </tr>
                             
-                        <?php}?>
+                        }?>
                         <tr>
                             <td>client Name</td>
                             <td><?=$_POST['userName']?></td>
@@ -127,20 +127,20 @@ if ($_POST['city']=="cairo") {
                             <td><?=$netTotal?></td>
                         </tr>
                         
-                        
+                        <?phpendif?>
                         </form>
                 
-                <?php}?>
+                
                 
         </div>
-        </div>
+        <!-- </div> -->
 </div> 
 <footer class="w-100 bg-dark text-light text-center py-2" style="position: fixed;bottom:0;">
         All Rights Reserved 
 </footer>
  <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
@@ -148,6 +148,6 @@ if ($_POST['city']=="cairo") {
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
+    </script> -->
 </body>
 </html>

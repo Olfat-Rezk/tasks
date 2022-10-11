@@ -50,8 +50,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         <div class="col-12 text-center mt-5">
            <form method="post">
            	<div class="form-group">
-           		<table>
-           			<thead >
+           		<table  class="col-12 text-left mt-5">
+           			<thead  >
            				<tr>
            				<th>Questions</th>
            				<th>Bad</th>
@@ -70,7 +70,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
            				</tr>
 
                   <tr>
-                    <td>Are you satisfied with the level of cleanliness?</td>
+                    <td>Are you satisfied with the service price?</td>
                     <td><input class="form-check-input" type="radio" value="0" name="quest2" ></td>
                     <td><input class="form-check-input" type="radio" value="3" name="quest2" ></td>
                     <td><input class="form-check-input" type="radio" value="5" name="quest2" ></td>
@@ -78,7 +78,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                   </tr>
 
                   <tr>
-                    <td>Are you satisfied with the service price?</td>
+                    <td>Are you satisfied with nursing service ?</td>
                     <td><input class="form-check-input" type="radio" value="0" name="quest3" ></td>
                     <td><input class="form-check-input" type="radio" value="3" name="quest3" ></td>
                     <td><input class="form-check-input" type="radio" value="5" name="quest3" ></td>
