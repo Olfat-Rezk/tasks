@@ -1,4 +1,15 @@
 <?php
+$errors = [];
+if(empty($_POST['name'])){
+    $errors = "Enter your name";
+}
+
+if(empty($_POST['city'])){
+    $errors = "Enter your city";
+}
+if(empty($_POST['numVariable'])){
+    $errors = "Enter your numVariable";
+}
 print_r($_POST);
 if ($_POST['city']=="cairo") {
     $delivery=0;
@@ -13,7 +24,7 @@ if ($_POST['city']=="cairo") {
     $delivery = 100;
 }
 
-  $total = $_GET['price']* $_GET['quatity'];
+  
   if ($total<=1000) {
       # code...
     $discount = 0;
@@ -34,8 +45,9 @@ if ($_POST['city']=="cairo") {
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>Supermarket</title>
+    <title>Supermarket</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -44,103 +56,117 @@ if ($_POST['city']=="cairo") {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-<body>
-	<div class="container">
-    <div class="row">
-        <div class="col-12 text-center mt-5">
-            <h1> Supermarket</h1>
-            <form method="post">
-                <div class="form-group">
-                    <label for="name">User Name </label>
-                    <input type="name" name="userName" id="name" required class="form-control" value="<?= $_POST['name'] ?? "" ?>" placeholder="" aria-describedby="helpId">
-                   <!--  <?= $errors['name'] ?? "" ?> -->
-                </div>
-                <div class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                    <label for="city">Your city </label>
-                    <select class="form-group" name="city">
-                      <option >Open this select menu</option>
-                      <option value="cairo" >Caior</option>
-                      <option value="giza" >Giza</option>
-                      <option value="alex" >Alex</option>
-                      <option value="other" >Other</option>
-                    </select>
-                   <!--  <?= $errors['city'] ?? "" ?> -->
-                </div>
 
-                <div class="form-group">
-                    <label for="numVariable">Number of Variable</label>
-                    <input type="integer" name="numVariable" id="numVariable" class="form-control" placeholder="" aria-describedby="helpId">
-                   <!--  <?= $errors['numVariable'] ?? "" ?> -->
-                </div>
-                  <button class="btn btn-outline-dark rounded form-control" type="submit" name="Products"> Enter Products </button>
-              
-              
-            <?php if(isset($_POST['Products'])){
-                # code...
-                $rows = $_POST['numVariable'];?>
-                
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mt-5">
+                <h1> Supermarket</h1>
+                <form method="post">
+                    <div class="form-group">
+                        <label for="name">User Name </label>
+                        <input type="name" name="userName" id="name" required class="form-control" value=""
+                            placeholder="" aria-describedby="helpId">
+                        <?= $errors['name'] ?? "" ?>
+                    </div>
+                    <div class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                        <label for="city">Your city </label>
+                        <select class="form-group" name="city">
+                            <option>Open this select menu</option>
+                            <option value="cairo">Caior</option>
+                            <option value="giza">Giza</option>
+                            <option value="alex">Alex</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <?= $errors['city'] ?? "" ?>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="numVariable">Number of Variable</label>
+                        <input type="integer" name="numVariable" id="numVariable" class="form-control" placeholder=""
+                            aria-describedby="helpId">
+
+                        <?= $errors['numVariable'] ?? "" ?>
+                    </div>
+
+
+
+                    <button class="btn btn-outline-dark rounded form-control" type="submit" name="Products"> Enter
+                        Products </button>
+
+
+                    <?php if(isset($_POST['Products']):
+               
+                        $rows = $_POST['numVariable'];?>
+
                     <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>Product Name</th>
-                            <th>Price</th>
-                            <th>Quantities</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                         
-                        <?php for($i=0;$i<=$rows;$i++){?>
-                            
+                        <thead>
                             <tr>
-                                <td><input type="text" id="productName" name="productName"></td>
-                                <td><input type="float" id="Price" name="Price" ></td>
-                                <td><input type="float" id="quatity" name="quatity"></td>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Quantities</th>
                             </tr>
+                        </thead>
+                        <tbody>
+
+                            <?php for($i=0;$i<=$rows;$i++){
                             
-                        }?>
-                        <tr>
-                            <td>client Name</td>
-                            <td><?=$_POST['userName']?></td>
-                        </tr>
-                        <tr>
-                            <td>city</td>
-                            <td><?=$_POST['city']?></td>
-                        </tr>
-                        <tr>
-                            <td>Total</td>
-                            <td><?=$total?></td>
-                        </tr>
-                        <tr>
-                            <td>Discount </td>
-                            <td><?=$discount?></td>
-                        </tr>
-                        <tr>
-                            <td>Total After Discount</td>
-                            <td><?=$totalAfterDis?></td>
-                        </tr>
-                        <tr>
-                            <td>Delivery</td>
-                            <td><?=$delivery?></td>
-                        </tr>
-                        <tr>
-                            <td>Net TOtal</td>
-                            <td><?=$netTotal?></td>
-                        </tr>
-                        
-                        <?phpendif?>
-                        </form>
-                
-                
-                
+                                 echo(' <tr>' .
+                                '<td><input type="text" id="productName" name="productName$i"></td>' .
+                                '<td><input type="float" id="Price" name="Price$i" ></td>' .
+                                '<td><input type="float" id="quatity" name="quatity$i"></td>' .
+                                 '</tr>');
+
+                                 $price[] = $_POST['price'.$i]* $_POST['quatity'.$i];
+                                  $total =implode('+',$price) ;
+
+                            
+                            }?>
+                            <tr>
+                                <td>client Name</td>
+                                <td><?=$_POST['userName']?></td>
+                            </tr>
+                            <tr>
+                                <td>city</td>
+                                <td><?=$_POST['city']?></td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td><?=$total?></td>
+                            </tr>
+                            <tr>
+                                <td>Discount </td>
+                                <td><?=$discount?></td>
+                            </tr>
+                            <tr>
+                                <td>Total After Discount</td>
+                                <td><?=$totalAfterDis?></td>
+                            </tr>
+                            <tr>
+                                <td>Delivery</td>
+                                <td><?=$delivery?></td>
+                            </tr>
+                            <tr>
+                                <td>Net TOtal</td>
+                                <td><?=$netTotal?></td>
+                            </tr>
+
+                            <?php endif ?>
+                </form>
+
+
+
+            </div>
+            <!-- </div> -->
         </div>
-        <!-- </div> -->
-</div> 
-<footer class="w-100 bg-dark text-light text-center py-2" style="position: fixed;bottom:0;">
-        All Rights Reserved 
-</footer>
- <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        <footer class="w-100 bg-dark text-light text-center py-2" style="position: fixed;bottom:0;">
+            All Rights Reserved
+        </footer>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
@@ -150,4 +176,5 @@ if ($_POST['city']=="cairo") {
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script> -->
 </body>
+
 </html>

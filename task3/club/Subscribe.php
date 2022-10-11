@@ -1,4 +1,16 @@
 <?php
+session_start();
+$_SESSION= $_POST;
+if(isset($_SESSION['submit'])){
+    header('location:Games.php');
+}
+$errors=[];
+if(empty($_POST['name'])){
+    $errors['name']= "Please , enter your name";
+}
+if(empty($_POST['countFamily'])){
+    $errors['countFamily']= "Please , enter your count of your family";
+}
 
 ?>
 <!doctype html>
@@ -20,46 +32,28 @@
 <div class="container">
     <div class="row">
         <div class="col-12 text-center mt-5">
-            <h1> Bank</h1>
+            <h1> Subscribe</h1>
         </div>
         <div class="col-4 offset-4 mt-5">
             <form method="post">
                 <div class="form-group">
                     <label for="name">Member Name </label>
-                    <input type="name" name="name" id="name" required class="form-control" value="<?= $_POST['name'] ?? "" ?>" placeholder="" aria-describedby="helpId">
+                    <input type="name" name="name" id="name" required class="form-control" value="" placeholder="" aria-describedby="helpId">
                     <?= $errors['name'] ?? "" ?>
                 </div>
                 <div class="form-group">
                     <label for="countFamily">count of family</label>
                     <input type="countFamily" name="countFamily" id="countFamily" class="form-control" placeholder="" aria-describedby="helpId">
-                    <?= $errors['countFamily'] ?? "" ?>
+                    <?= $errors['countFamily']?? "" ?>
                 </div>
                 
                 <div class="form-group">
-                    <input class="btn btn-primary" type="submit" name="calculate"value="calculate">
+                    <input class="btn btn-primary" type="submit" name="submit"value="submit">
                 </div>
             </form>
         </div>
     </div>
-        <?Php
-        ?>2w
-   <!-- <table class="table table-hover">
-    	<thead>
-    		<th><?='User Name'?></th>
-    		<th><?='Inserted Rate'?></th>
-    		<th><?='Loan After Insert '?></th>
-    		<th><?='Monthly'?></th>
-    	</thead>
-    	<tbody>
-    		<td><?=$_POST['name']?></td>
-    		<td><?=$insertedRate?></td>
-    		<td><?=$loanAfterInser?></td>
-    		<td><?=$monthly?></td>
-
-    	</tbody>
-    </table> -->
-</div>
-
+  
 
 
 <footer class="w-100 bg-dark text-light text-center py-2" style="position: fixed;bottom:0;">
