@@ -1,46 +1,35 @@
 <?php
 $errors = [];
-if(empty($_POST['name'])){
-    $errors = "Enter your name";
+if($_SERVER['REQUEST_METHOD']=='POST'){
+
+
+    if(empty($_POST['name'])){
+        $errors = "Enter your name";
+    }
+
+    if(empty($_POST['city'])){
+        $errors = "Enter your city";
+    }
+    if(empty($_POST['numVariable'])){
+        $errors = "Enter your numVariable";
+    }
+    print_r($_POST);
+    if ($_POST['city']=="cairo") {
+        $delivery=0;
+
+    }elseif ($_POST['city']=="giza") {
+        # code...
+        $delivery = 30;
+    }elseif ($_POST['city']=="alex") {
+        # code...
+        $delivery = 50;
+    }else{
+        $delivery = 100;
+    }
+
+ 
+
 }
-
-if(empty($_POST['city'])){
-    $errors = "Enter your city";
-}
-if(empty($_POST['numVariable'])){
-    $errors = "Enter your numVariable";
-}
-print_r($_POST);
-if ($_POST['city']=="cairo") {
-    $delivery=0;
-
-}elseif ($_POST['city']=="giza") {
-    # code...
-    $delivery = 30;
-}elseif ($_POST['city']=="alex") {
-    # code...
-    $delivery = 50;
-}else{
-    $delivery = 100;
-}
-
-  
-  if ($total<=1000) {
-      # code...
-    $discount = 0;
-  }elseif ($total>1000 && $total<=3000 ) {
-      # code...
-    $discount = 0.1*$total;
-  }elseif ($total>3000 && $total<=4500) {
-      # code...
-    $discount = 0.15*$total;
-  }else{
-    $discount = 0.2*$total;
-  }
-  $totalAfterDis = $total-$discount;
-  $netTotal = $totalAfterDis + $delivery;
-
-
 
 ?>
 <!DOCTYPE html>
@@ -65,15 +54,16 @@ if ($_POST['city']=="cairo") {
                 <form method="post">
                     <div class="form-group">
                         <label for="name">User Name </label>
-                        <input type="name" name="userName" id="name" required class="form-control" value=""
-                            placeholder="" aria-describedby="helpId">
+                        <input type="name" name="userName" id="name" required class="form-control"
+                            value="<?=$_POST['userName']??''?>" placeholder="" aria-describedby="helpId">
                         <?= $errors['name'] ?? "" ?>
                     </div>
                     <div class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                        
                         <label for="city">Your city </label>
                         <select class="form-group" name="city">
                             <option>Open this select menu</option>
-                            <option value="cairo">Caior</option>
+                            <option  value="cairo">Cairo</option>
                             <option value="giza">Giza</option>
                             <option value="alex">Alex</option>
                             <option value="other">Other</option>
@@ -86,7 +76,7 @@ if ($_POST['city']=="cairo") {
                     <div class="form-group">
                         <label for="numVariable">Number of Variable</label>
                         <input type="integer" name="numVariable" id="numVariable" class="form-control" placeholder=""
-                            aria-describedby="helpId">
+                            aria-describedby="helpId" value="<?=$_POST['numVariable']??''?>">
 
                         <?= $errors['numVariable'] ?? "" ?>
                     </div>
@@ -96,64 +86,90 @@ if ($_POST['city']=="cairo") {
                     <button class="btn btn-outline-dark rounded form-control" type="submit" name="Products"> Enter
                         Products </button>
 
+                    <?php
+                        if(isset($_POST['Products'])){
 
-                    <?php if(isset($_POST['Products']):
-               
-                        $rows = $_POST['numVariable'];?>
+                   echo ('<table class="table table-bordered table-hover">'.
+                        '<thead>'.
+                            '<tr>'.
+                                '<th>Product Name</th>'.
+                                '<th>Price</th>'.
+                                '<th>Quantities</th>'.
+                            '</tr>'.
+                        '</thead>'.
+                        '<tbody>');
 
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>Product Name</th>
-                                <th>Price</th>
-                                <th>Quantities</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                                $price=0;
+                                $total = 0;
+                                $discount= 0;
+                                $subTotal = 0;
 
-                            <?php for($i=0;$i<=$rows;$i++){
+                                 for($i=1;$i<=$_POST['numVariable'];$i++){
                             
                                  echo(' <tr>' .
-                                '<td><input type="text" id="productName" name="productName$i"></td>' .
-                                '<td><input type="float" id="Price" name="Price$i" ></td>' .
-                                '<td><input type="float" id="quatity" name="quatity$i"></td>' .
+                                '<td><input type="text" id="productName" name="productName_'.$i.'"></td>' .
+                                '<td><input type="float" id="Price" name="Price_'.$i.'" ></td>' .
+                                '<td><input type="float" id="quatity" name="quatity_'.$i.'"></td>' .
                                  '</tr>');
+                                 $subTotal = $_POST['price_'.$i] * $_POST['quantity_'.$i];
+                                 $total += $subTotal;
+                                }
 
-                                 $price[] = $_POST['price'.$i]* $_POST['quatity'.$i];
-                                  $total =implode('+',$price) ;
+                                     
+                                    if ($total<=1000) {
+                                        # code...
+                                        $discount = 0;
+                                    }elseif ($total>1000 && $total<=3000 ) {
+                                        # code...
+                                        $discount = 0.1*$total;
+                                    }elseif ($total>3000 && $total<=4500) {
+                                        # code...
+                                        $discount = 0.15*$total;
+                                    }else{
+                                        $discount = 0.2*$total;
+                                    }
+                                
+                                    $discount+=$discount;
+                                    $totalAfterDis = $total-$discount;
+                                    $netTotal = $totalAfterDis + $delivery;
 
                             
-                            }?>
-                            <tr>
-                                <td>client Name</td>
-                                <td><?=$_POST['userName']?></td>
-                            </tr>
-                            <tr>
-                                <td>city</td>
-                                <td><?=$_POST['city']?></td>
-                            </tr>
-                            <tr>
-                                <td>Total</td>
-                                <td><?=$total?></td>
-                            </tr>
-                            <tr>
-                                <td>Discount </td>
-                                <td><?=$discount?></td>
-                            </tr>
-                            <tr>
-                                <td>Total After Discount</td>
-                                <td><?=$totalAfterDis?></td>
-                            </tr>
-                            <tr>
-                                <td>Delivery</td>
-                                <td><?=$delivery?></td>
-                            </tr>
-                            <tr>
-                                <td>Net TOtal</td>
-                                <td><?=$netTotal?></td>
-                            </tr>
+                            
+                            echo('<button class="btn btn-outline-dark rounded form-control" type="submit" name="show_invoice"> 
+                            Show Invoice </button>');
 
-                            <?php endif ?>
+                   if(isset($_POST['show_invoice'])){
+
+                   echo' <tr>'.
+                        '<td>client Name</td>'.
+                        '<td>{$_POST["userName"]}</td>'.
+                    '</tr>'.
+                    '<tr>'.
+                        '<td>city</td>'.
+                        '<td><?=$_POST["city"]?></td>'.
+                    '</tr>'.
+                    '<tr>'.
+                        '<td>Total</td>'.
+                        '<td><?=$total?></td>'.
+                    '</tr>'.
+                    '<tr>'.
+                        '<td>Discount </td>'.
+                        '<td><?=$discount?></td>'.
+                    '</tr>'.
+                    '<tr>'.
+                        '<td>Total After Discount</td>'.
+                        '<td><?=$totalAfterDis?></td>'.
+                    '</tr>'.
+                    '<tr>'.
+                        '<td>Delivery</td>'.
+                        '<td><?=$delivery?></td>'.
+                    '</tr>'.
+                    '<tr>'.
+                        '<td>Net TOtal</td>'.
+                        '<td><?=$netTotal?></td>'.
+                    '</tr>';
+
+                 } }?>
                 </form>
 
 
