@@ -3,7 +3,7 @@ $title = 'Result';
 include"Review.php";
 // print_r($_SESSION);
 $result = $_SESSION['quest1']+$_SESSION['quest2']+$_SESSION['quest3']+$_SESSION['quest4']+$_SESSION['quest5'];
-// echo $result;
+
 if ($result<=25) {
 	# code...
 	$message= "<p class='text-danger font-weight-bold text-center'> Total Review is Bad  </p>"

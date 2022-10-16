@@ -59,11 +59,11 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                         <?= $errors['name'] ?? "" ?>
                     </div>
                     <div class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                        
+
                         <label for="city">Your city </label>
                         <select class="form-group" name="city">
                             <option>Open this select menu</option>
-                            <option  value="cairo">Cairo</option>
+                            <option value="cairo">Cairo</option>
                             <option value="giza">Giza</option>
                             <option value="alex">Alex</option>
                             <option value="other">Other</option>
@@ -111,9 +111,14 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                 '<td><input type="float" id="Price" name="Price_'.$i.'" ></td>' .
                                 '<td><input type="float" id="quatity" name="quatity_'.$i.'"></td>' .
                                  '</tr>');
+                                 }
+                                 echo('<button class="btn btn-outline-dark rounded form-control" type="submit" name="show_invoice"> 
+                            Show Invoice </button>');
+
+                            if(isset($_POST['show_invoice'])){
                                  $subTotal = $_POST['price_'.$i] * $_POST['quantity_'.$i];
                                  $total += $subTotal;
-                                }
+                                
 
                                      
                                     if ($total<=1000) {
@@ -131,45 +136,41 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                 
                                     $discount+=$discount;
                                     $totalAfterDis = $total-$discount;
-                                    $netTotal = $totalAfterDis + $delivery;
+                                    $netTotal = $totalAfterDis + $delivery;?>
 
-                            
-                            
-                            echo('<button class="btn btn-outline-dark rounded form-control" type="submit" name="show_invoice"> 
-                            Show Invoice </button>');
 
-                   if(isset($_POST['show_invoice'])){
 
-                   echo' <tr>'.
-                        '<td>client Name</td>'.
-                        '<td>{$_POST["userName"]}</td>'.
-                    '</tr>'.
-                    '<tr>'.
-                        '<td>city</td>'.
-                        '<td><?=$_POST["city"]?></td>'.
-                    '</tr>'.
-                    '<tr>'.
-                        '<td>Total</td>'.
-                        '<td><?=$total?></td>'.
-                    '</tr>'.
-                    '<tr>'.
-                        '<td>Discount </td>'.
-                        '<td><?=$discount?></td>'.
-                    '</tr>'.
-                    '<tr>'.
-                        '<td>Total After Discount</td>'.
-                        '<td><?=$totalAfterDis?></td>'.
-                    '</tr>'.
-                    '<tr>'.
-                        '<td>Delivery</td>'.
-                        '<td><?=$delivery?></td>'.
-                    '</tr>'.
-                    '<tr>'.
-                        '<td>Net TOtal</td>'.
-                        '<td><?=$netTotal?></td>'.
-                    '</tr>';
+                    <tr>
+                        <td>client Name</td>
+                        <td>{$_POST["userName"]}</td>
+                    </tr>
+                    <tr>
+                        <td>city</td>
+                        <td><?=$_POST["city"]?></td>
+                    </tr>
+                    <tr>
+                        <td>Total</td>
+                        <td><?=$total?></td>
+                    </tr>
+                    <tr>
+                        <td>Discount </td>
+                        <td><?=$discount?></td>
+                    </tr>
+                    <tr>
+                        <td>Total After Discount</td>
+                        <td><?=$totalAfterDis?></td>
+                    </tr>
+                    <tr>
+                        <td>Delivery</td>
+                        <td><?=$delivery?></td>
+                    </tr>
+                    <tr>
+                        <td>Net TOtal</td>
+                        <td><?=$netTotal?></td>
+                    </tr>
+                    </tbody>
 
-                 } }?>
+                    <?php }} ?>
                 </form>
 
 

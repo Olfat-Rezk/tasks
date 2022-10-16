@@ -1,16 +1,16 @@
 <?php
 session_start();
 print_r($_SESSION);
-
+// $arr = array[null];
 if($_POST['calculate']) {
     if(isset($_POST['memberFamily0'])){
     
-        $arr = $array();
+        
         for($i=0;$i<$_SESSION['countFamily'];$i++){
           $arr[$i] = $_SESSION['memberFamily'.$i];
         }
     }
-      print_r($arr);
+    //   print_r($arr);
 }
 ?>
 
@@ -33,10 +33,11 @@ if($_POST['calculate']) {
     <div class="container">
         <div class="row">
             <div class="col-12 text-center mt-5">
-                <h1> Bank</h1>
+                <h1> Games</h1>
             </div>
             <div class="col-4 offset-4 mt-5">
-                <form method="post">
+                <form method="post" action="Result.php">
+                <input type="hidden" name="name" value="<?= $_POST['name']??'' ?>">
                     <div class="form-group">
                         <label for="name">Member Name </label>
                         <input type="name" name="name" id="name" value="<?=$_SESSION['name'] ?? "" ?>" placeholder=""
@@ -50,35 +51,38 @@ if($_POST['calculate']) {
                             aria-describedby="helpId">
 
                     </div>
-
-                    <label for="memberFamily">Member of family</label>
                     <?php for($i=0;$i<$_SESSION['countFamily'];$i++){?>
-                    <input type="memberFamily" name="memberFamily$i" id="memberFamily" value="" class="form-control"
+
+                    <label for="memberFamily">Member[<?=$i?>]</label>
+                    
+                    <input type="memberFamily" name="member[$i][name]" id="memberFamily" value="" class="form-control"
                         placeholder="" aria-describedby="helpId">
 
+                       
+
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="300" id="defaultCheck1" name="footbal$i">
-                        <label class="form-check-label" for="defaultCheck1">
-                            Football
+                        <input class="form-check-input" type="checkbox" value="300" id="football<?$i?>" name="member[<?$i?>][games][football]">
+                        <label class="form-check-label" for="Football">
+                            Football(300 EGP)
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="250" id="defaultCheck2"
-                            name="Swimming$i">
-                        <label class="form-check-label" for="defaultCheck2">
-                            Swimming
+                        <input class="form-check-input" type="checkbox" value="250" id="swimming<?$i?>"
+                            name="member[<?$i?>][games][swimming]">
+                        <label class="form-check-label" for="swimming">
+                            Swimming (250 EGP)
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="150" id="defaultCheck2" name="Volley$i">
-                        <label class="form-check-label" for="defaultCheck2">
-                            Volley ball
+                        <input class="form-check-input" type="checkbox" value="150" id="Volley[$i]" name="member[<?$i?>][games][volly]">
+                        <label class="form-check-label" for="Volley">
+                            Volley ball (150 EGP)
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="100" id="defaultCheck2" name="Other$i">
-                        <label class="form-check-label" for="defaultCheck2">
-                            Other
+                        <input class="form-check-input" type="checkbox" value="100" id="other[$i]" name="member[<?$i?>][games][other]">
+                        <label class="form-check-label" for="Other">
+                            Other (100 EGP)
                         </label>
                     </div>
 

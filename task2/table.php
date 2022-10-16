@@ -52,8 +52,8 @@ $users = [
         // 'phones'=>"",
     ]
 ];
-//$user1 = $users[1];
-//print_r($user1);
+$user1 = $users[1];
+print_r($user1);
 ////foreach ($users as $key=>$value){
 //    print_r($users[0]- );
 //
@@ -79,46 +79,46 @@ $users = [
 
 
         <h2> Table</h2>
-        <?php if(empty($users)){?>
-        <table class='table'>
-            <thead>
-                <?php foreach ($users[0] as $probarty => $value) {?>
-                <th><?=$property?></th>
-                <?php}?>
+        <?php if(!empty($users)){?>
+            <table class='table'>
+                <thead>
+                    <?php foreach($users[0] AS $property=>$value) {
+                echo ('<th><?=$probarty?></th>');
+                    }?>
 
-            </thead>
-            <tbody>
-                <?php foreach ($users as $user) {?>
+                </thead>
+                <tbody>
+                    <?php foreach ($users as $user) {?>
 
 
-                <tr>
-                    <td>
-                        <?php foreach ($user as $property => $value) {
-                                if (gettype($value)=='array' ||gettype($value)=='object') {
-                                    foreach ($value AS $keyOrProperty => $arrayOrObjectValue){
-                                                                if($property == 'gender' && $keyOrProperty == 'gender'){
-                                                                    if($arrayOrObjectValue == 'm'){
-                                                                        $arrayOrObjectValue = 'male';
-                                                                    }elseif($arrayOrObjectValue == 'f'){
-                                                                        $arrayOrObjectValue = 'female';
+                    <tr>
+                        <td>
+                            <?php foreach ($user as $property => $value) {?>
+                                <td>
+                                   <?php if (gettype($value)=='array' ||gettype($value)=='object') {
+                                        foreach ($value AS $keyOrProperty => $arrayOrObjectValue){
+                                                                    if($property == 'gender' && $keyOrProperty == 'gender'){
+                                                                        if($arrayOrObjectValue == 'm'){
+                                                                            $arrayOrObjectValue = 'male';
+                                                                        }elseif($arrayOrObjectValue == 'f'){
+                                                                            $arrayOrObjectValue = 'female';
+                                                                        }
+                                                                    }else{
+                                                                        echo $arrayOrObjectValue. '  ';
                                                                     }
-                                                                }else{
-                                                                    echo $value;
-                                                                }
+                                        }
+                                        
                                     }
-                                    
-                                }
-                        ?>
-                        <?php}?>
-                    </td>
-                    
-                </tr>
-                <?php }?>
-        </table>
-        <?php}else{
+                                }?>
 
-        }
-?>
+                        </td>
+
+                    </tr>
+                <?php }?>
+                
+            </table>
+           
+        <?php }?>
 
 
 
