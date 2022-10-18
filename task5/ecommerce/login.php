@@ -1,7 +1,50 @@
 <?php
+
+use App\Database\Models\User;
+use App\Http\Requests\Validation;
+
 include"layouts/header.php";
+include "App/Http/middlewares/guest.php";
 include"layouts/nav.php";
 include"layouts/Breadcrumb.php";
+$Validation = new Validation;
+
+if($_SERVER['REQUEST_METHOD']=='POST'){
+    
+    
+    $Validation->setInput($_POST['email']??'')->setInputName('email')->required()->regex('/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/')->unique();
+    $Validation->setInput($_POST['password'] ?? "")->setInputName('password')->required()->regex('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,32}$/','Wrong email or password');
+  
+    if(empty($Validation->getErrors())){
+        $user = new User;
+        $user->setEmail($_POST['email'])->setPassword($_POST['email']);
+       $result =$user->getUserByEmail();
+       if( $result !=false){
+        if($result->num_row==1){
+            $user= $result->fetch_object();
+            if(password_verify($_POST['password'],$user->password){
+                $user->updateVerificationCode()
+                        header('location:verification-code.php');
+                        die;
+                    }else{
+                        $_SESSION['user'] = $user;
+                        header('location:index.php');die;
+                    }
+            }elseif(isset($_POST['remember_me']){
+                setcookie('remember_me',$_POST['remember_me'],time() + (86400 * 30),"/");
+            }$_SESSION['user']= $user;
+            header('loction:index.php');die;
+        }
+
+        
+        }
+
+       
+
+    }
+
+
+
 ?>
 
 
@@ -20,9 +63,9 @@ include"layouts/Breadcrumb.php";
                         <div id="lg1" class="tab-pane active">
                             <div class="login-form-container">
                                 <div class="login-register-form">
-                                    <form action="#" method="post">
-                                        <input type="text" name="user-name" placeholder="Username">
-                                        <input type="password" name="user-password" placeholder="Password">
+                                    <form method="post">
+                                        <input type="email" name="email" placeholder="email">
+                                        <input type="password" name="password" placeholder="Password">
                                         <div class="button-box">
                                             <div class="login-toggle-btn">
                                                 <input type="checkbox">
