@@ -73,7 +73,7 @@
                         </div>
                         <?php if(isset($_SESSION['user'])){ ?>
                             <div class="header-currency">
-                                <span class="digit"><?= ucfirst($_SESSION['user']->first_name) ?> <i class="ti-angle-down"></i></span>
+                                <span class="digit"><?=ucfirst($_SESSION['user']->first_name) ?> <i class="ti-angle-down"></i></span>
                                 <div class="dollar-submenu">
                                     <ul>
                                         <li><a href="my-account.php">My Account</a></li>

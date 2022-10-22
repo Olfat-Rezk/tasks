@@ -250,14 +250,16 @@ class User extends Model{
 
 
     public function create(){
-        $query = "SELECT * FROM users WHERE email= ? AND verification_code=?";
+        $query = "INSERT INTO  users (first_name,last_name,email,phone,password,gender,verification_code)
+        VALUES(?,?,?,?,?,?,?)";
         $stmt = $this->conn->prepare($query);
         if(! $stmt){
             return $stmt;
         }
-        $stmt->bind_param('si',$this->email,$this->verification_code);
-        $stmt->execute();
-        return $stmt->get_result();
+        $stmt->bind_param('ssssssi',$this->first_name,$this->last_name,$this->email,
+        $this->phone,$this->password,$this->gender,$this->verification_code);
+        
+        return $stmt->execute();
     }
 
     public function checkCode(){
@@ -288,7 +290,7 @@ class User extends Model{
             if(!$stmt){
                 return $stmt;
             }
-            $stmt->bind_param( 'i',$this->email);
+            $stmt->bind_param( 's',$this->email);
             $stmt->execute();
             return $stmt->get_result();
         }
@@ -321,6 +323,16 @@ class User extends Model{
                 return $stmt;
             }
             $stmt->bind_param('ssss',$this->first_name,$this->last_name,$this->gender,$this->email);
+            $stmt->execute();
+            return $stmt->get_result();
+        }
+        public function changePassword($new_password){
+            $query = "UPDATE users SET password=? WHERE email=?";
+            $stmt = $this->conn->prepare($query);
+            if( !$new_password==$this->password){
+                return $stmt;
+            }
+            $stmt->bind_param('SS',$this->password,$this->email);
             $stmt->execute();
             return $stmt->get_result();
         }

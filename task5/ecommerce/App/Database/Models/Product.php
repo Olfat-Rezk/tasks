@@ -4,6 +4,8 @@ namespace App\Database\Models;
 class Product extends Model{
     private $id, $name_ar,$name_en,$details_ar,$details_en,$status,$quantity,
     $price,$image,$created_at,$updated_at,$brand_id,$subcategory_id;
+    const ACTIVE = 1;
+    const NOT_ACTIVE=0;
 
     /**
      * Get the value of id
@@ -263,5 +265,14 @@ class Product extends Model{
         $this->subcategory_id = $subcategory_id;
 
         return $this;
+    }
+    public function get(){
+        $query = "SELECT * FROM products WHERE status= 1";
+        $stmt = $this->conn->prepare($query);
+        if(!$stmt){
+            return $stmt;
+        }
+        $stmt->execute();
+        return $stmt->get_result();
     }
 }

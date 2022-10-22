@@ -27,13 +27,14 @@ namespace App\Http\Requests;
         } return $this;
 
     }
-    public function regex(string $pattern,$message=null)  :self
-    {
-        if(! preg_match($pattern,$this->input)){
-            $this->errors[$this->inputName][__FUNCTION__] = $message ?? "{$this->inputName} invalid";
-        }
-        return $this;
-    }
+    // public function regex(string $pattern,$message=null)  :self
+    // {
+    //     // print_r($pattern);var_dump($this->getInput());die;
+    //     if(! preg_match($pattern,$this->input)){
+    //         $this->errors[$this->inputName][__FUNCTION__] = $message ?? "{$this->inputName} invalid";
+    //     }
+    //     return $this;
+    // }
     public function unique(){
 
     }
@@ -96,6 +97,7 @@ namespace App\Http\Requests;
      */ 
     public function setInput($input)
     {
+        // var_dump($input);die;
         $this->input = $input;
 
         return $this;

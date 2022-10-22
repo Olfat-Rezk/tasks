@@ -6,8 +6,8 @@ use App\Http\Requests\Validation;
 
 
 include "layouts/header.php";
-include "App/Http/middlewares/guest.php";
-include "layouts/navbar.php";
+include "App/Http/middlewares/auth.php";
+include "layouts/nav.php";
 include "layouts/breadcrumb.php";
 $validation = new Validation;
 if($_SERVER['REQUEST_METHOD']=='POST'){
@@ -18,8 +18,9 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         if(empty($validation->getErrors())){
           $user = new User;
 
-          $user->setFirst_name($_POST['first_name'])->setLast_name($_POST['last_name'])->setGender($_POST['gender']
-          ->setEmail($_SESSION['user']->email) ;
+            $user->setFirst_name($_POST['first_name'])->setLast_name($_POST['last_name'])
+            ->setGender($_POST['gender'])->setEmail($_SESSION['user']->email);
+         
           
           if($user->update()){
             $_SESSION['user']->first_name = $_POST['first_name'];
@@ -30,6 +31,30 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             echo "error";
           }
         }
+    }elseif(isset($_POST['change_password'])){
+            $validation->setInput($_POST['old_password'] ?? "")->setInputName('password')->required();
+            //->regex('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,32}$/','Wrong email or password');
+            $validation->setInput($_POST['new_password'] ?? "")->setInputName('password')->required();
+           // ->regex('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,32}$/','Wrong email or password');
+            $validation->setInput($_POST['password_confirm'] ?? "")->setInputName('password')->required();
+            if(empty($validation->getErrors())){
+                if($_POST['new_password']===$_POST['password_confirm']){
+                   $_SESSION['email']= 'smsm@gmail.com';
+                    $user = new User;
+                    $user->setEmail($_SESSION['email'])
+                    ->setPassword($_POST['new_password']);
+                    //print_r($user);die;
+                    $user->changePassword($_POST['new_password']);
+                    echo"password changed";
+                }else{
+                    echo "password error";
+                }
+            }
+               
+
+        
+            
+     }
 
 }
 
@@ -58,7 +83,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                             <div class="row">
 
                                                 <div class="col-lg-6 col-md-6">
-                                                <?php  
+                                                    <!-- <?php  
                                                                 if($_SESSION['user']->image == 'default.jpg'){
                                                                     if($_SESSION['user']->gender == 'm'){
                                                                         $image = 'male.png';
@@ -68,7 +93,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                                                 }else{
                                                                     $image = $_SESSION['user']->image;
                                                                 }
-                                                            ?>
+                                                            ?> -->
                                                     <div class="billing-info">
                                                         <label>Your Image</label>
                                                         <input type="file">
@@ -119,34 +144,43 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                     </div>
                     <div id="my-account-2" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <div class="billing-information-wrapper">
-                                <div class="account-info-wrapper">
-                                    <h4>Change Password</h4>
-                                    <h5>Your Password</h5>
-                                </div>
-                                <div class="row">
+                            <form method="post">
+                                <div class="billing-information-wrapper">
+                                    
+                                    <div class="account-info-wrapper">
+                                        <h4>Change Password</h4>
+                                        <h5>Your Password</h5>
+                                    </div>
+                                    <div class="row">
                                     <div class="col-lg-12 col-md-12">
-                                        <div class="billing-info">
-                                            <label>Password</label>
-                                            <input type="password">
+                                            <div class="billing-info">
+                                                <label> Old Password</label>
+                                                <input type="password"name='old_password'>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="billing-info" >
+                                                <label>New Password</label>
+                                                <input type="password"name='new_password'>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="billing-info">
+                                                <label>Password Confirm</label>
+                                                <input type="password"name='password_confirm'>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 col-md-12">
-                                        <div class="billing-info">
-                                            <label>Password Confirm</label>
-                                            <input type="password">
+                                    <div class="billing-back-btn">
+                                        <div class="billing-back">
+                                            <a href="#"><i class="ion-arrow-up-c"></i> back</a>
+                                        </div>
+                                        <div class="billing-btn">
+                                            <button type="submit" name="change_password">Continue</button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="billing-back-btn">
-                                    <div class="billing-back">
-                                        <a href="#"><i class="ion-arrow-up-c"></i> back</a>
-                                    </div>
-                                    <div class="billing-btn">
-                                        <button type="submit">Continue</button>
-                                    </div>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>

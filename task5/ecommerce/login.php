@@ -12,39 +12,23 @@ $Validation = new Validation;
 if($_SERVER['REQUEST_METHOD']=='POST'){
     
     
-    $Validation->setInput($_POST['email']??'')->setInputName('email')->required()->regex('/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/')->unique();
-    $Validation->setInput($_POST['password'] ?? "")->setInputName('password')->required()->regex('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,32}$/','Wrong email or password');
-  
+    $Validation->setInput($_POST['email']??'')->setInputName('email')->required();//->regex('/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/')->unique();
+    $Validation->setInput($_POST['password'] ?? "")->setInputName('password')->required();
+    //->regex('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,32}$/','Wrong email or password');
     if(empty($Validation->getErrors())){
         $user = new User;
         $user->setEmail($_POST['email'])->setPassword($_POST['email']);
        $result =$user->getUserByEmail();
        if( $result !=false){
-        if($result->num_row==1){
-            $user= $result->fetch_object();
-            if(password_verify($_POST['password'],$user->password){
-                $user->updateVerificationCode()
-                        header('location:verification-code.php');
-                        die;
-                    }else{
-                        $_SESSION['user'] = $user;
-                        header('location:index.php');die;
-                    }
-            }elseif(isset($_POST['remember_me']){
-                setcookie('remember_me',$_POST['remember_me'],time() + (86400 * 30),"/");
-            }$_SESSION['user']= $user;
-            header('loction:index.php');die;
-        }
-
+            if($result->num_rows == 1){
+                $resultFetched= $result->fetch_object();
+                $_SESSION['user'] = $resultFetched;
+    
+                header('location:index.php');die;}
         
-        }
-
-       
-
+       }
     }
-
-
-
+}
 ?>
 
 
