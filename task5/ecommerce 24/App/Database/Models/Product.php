@@ -381,7 +381,10 @@ class Product extends Model {
 
     }
     public function mostOrder(){
-        $query = "SELECT `products_orders`.*,
+        $query = "SELECT
+        SUM( `products_orders`.`quantity`)AS `quantity`,
+
+               
                     `products`.`image`,
                     `products`.`price`
                      FROM `products_orders`
