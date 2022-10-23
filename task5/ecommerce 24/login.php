@@ -21,7 +21,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         if($res !== false){
             if($res->num_rows == 1){
                 $user = $res->fetch_object();
-                if(password_verify($_POST['password'],$user->password)){
+                //if(password_verify($_POST['password'],$user->password)){
                     //if(is_null($user->email_verified_at)){
                         $_SESSION['verification-email'] = $_POST['email'];
                         $_SESSION['page'] = "login";
@@ -41,7 +41,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
             }
        // }else{
             $error = "<div class='alert alert-danger text-center'> Something went wrong </div>";
-       // }
+        //}
 
     }
 }

@@ -59,29 +59,19 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     // }
     if(isset($_POST['change_password'])){
         
-        $validation->setInput($_POST['old_password'] ?? "")->setInputName('old_password')->required()->regex('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,32}$/',"Minimum eight and maximum 32 characters, at least one uppercase letter, one lowercase letter, one number and one special character")->confirmed($_POST['password_confirmation']);
-        $validation->setInput($_POST['new_password'] ?? "")->setInputName('new_password')->required()->regex('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,32}$/',"Minimum eight and maximum 32 characters, at least one uppercase letter, one lowercase letter, one number and one special character")->confirmed($_POST['password_confirmation']);
+        $validation->setInput($_POST['old_password'] ?? "")->setInputName('old_password')->required()
+        ->regex('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,32}$/',"Minimum eight and maximum 32 characters, at least one uppercase letter, one lowercase letter, one number and one special character");
+       
+        $validation->setInput($_POST['new_password'] ?? "")
+        ->setInputName('new_password')->required()->regex('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,32}$/',"Minimum eight and maximum 32 characters, at least one uppercase letter, one lowercase letter, one number and one special character")
+        ->confirmed($_POST['password_confirmation'])->matched($_SESSION['user']->password);
 
         $validation->setInput($_POST['password_confirmation'] ?? "")->setInputName('password_confirmation')->required();
         if(empty($validation->getErrors())){
             $user = new User;
-            $user->setInput['email']=$_SESSION['email'];
-            $changed_password = $user->changePassword();
-           if( $changed_password !==false){
-            if( $changed_password->num_rows==1){
-                $user = $changed_password->fetch_object();
-                if(password_verify($_POST['new_password'],$user->password)){
-                    $user->setPassword($_POST['new_password']);
-                    echo"success";
-
-                }else{
-                    echo"Wrong password";
-                }
-            }else{
-                echo"Wrong password ";
-            }
-           }
-
+            $user->setInput['password']=$_POST['new_password'];
+            echo"password change successfully";
+            
         }
     }
 }

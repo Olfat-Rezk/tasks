@@ -355,13 +355,6 @@ class User extends Model  {
         $stmt->bind_param('ssis',$this->first_name,$this->last_name,$this->gender,$this->email); // pass paramerters 
         return $stmt->execute(); // run query
     }
-    public function changePassword(){
-        $query = "SELECT password FROM users WHERE email=?";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param('s',$this->email);
-        $stmt->execute();
-        return $stmt->get_result();
-
-    }
+   
 }
 

@@ -179,7 +179,13 @@ class Validation {
 
         return $this;
     }
+    public function matched($old_password){
+        if(! $this->input== $old_password){
+            return false;
+        }
+        return $this;
 
+    }
 
     
 }

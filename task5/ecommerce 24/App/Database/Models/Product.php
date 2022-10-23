@@ -381,14 +381,16 @@ class Product extends Model {
 
     }
     public function mostOrder(){
-        $query = "SELECT 'products_orders'.*,
-                    'products'.'image'
-                     FROM 'products_orders'
-                     LEFT JOIN  'products'
-                     ON 'products'.'id' = 'products_orders'.'product_id'
-                     ORDER BY 'quantity' DESC LIMIT 4";
+        $query = "SELECT `products_orders`.*,
+                    `products`.`image`,
+                    `products`.`price`
+                     FROM `products_orders`
+                     LEFT JOIN  `products`
+                     ON `products`.`id` = `products_orders`.`product_id`
+                     GROUP BY `products`.`id`
+                    
+                     ORDER BY `quantity` DESC LIMIT 4";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param('i',$this->created_at);
         $stmt-> execute();
         return $stmt->get_result();
     }

@@ -218,7 +218,7 @@ $order_products = $productModel->mostOrder()->fetch_all(MYSQLI_ASSOC);
                             <a href="#"><img src="assets/img/product/<?=$order_product['image']?>" alt="" /></a>
                         </div>
                         <div class="blog-content pt-25">
-                            <span class="blog-date">14 Sep</span>
+                            <span class="blog-date"><?=$order_product['price']?></span>
                             <h3><a href="#">Lorem ipsum sit ame co.</a></h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed do eius tempor incididunt ut
                                 labore et dolore</p>
